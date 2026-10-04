@@ -1,0 +1,19 @@
+# fly launch --no-deploy && fly volumes create data --size 1 && fly deploy
+# then: fly ips allocate-v4   (dedicated IPv4 is needed for raw TCP on :22)
+app = "rivaldo-portfolio"
+primary_region = "sin"
+
+[mounts]
+  source = "data"
+  destination = "/data"
+
+# Raw TCP service: no HTTP, Fly just forwards port 22 to the container.
+[[services]]
+  internal_port = 22
+  protocol = "tcp"
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[services.ports]]
+    port = 22

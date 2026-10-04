@@ -1,0 +1,199 @@
+# Portfolio content. Schema and tips: docs/CONTENT.md
+#
+# Dates are YYYY-MM. Leave `end` out (or write `present`) for ongoing work.
+# Experiences and projects are shown newest first automatically.
+
+site:
+  address: rivaldo.dev # shown in the address bar and as `ssh rivaldo.dev`
+
+profile:
+  name: Rivaldo Ardika Lawalata
+  title: Fullstack Developer
+  location: Indonesia
+  summary: >
+    Fullstack developer building ERP systems, payment integrations, and web
+    platforms for fintech and multi-finance companies. I own systems
+    end-to-end: from database design and secure banking integrations to CI/CD
+    pipelines and production servers on Linux.
+  now: >
+    Fullstack Developer at PT Woori Finance Indonesia, building WIS, the
+    company's internal ERP.
+  highlights:
+    - { label: Go · TypeScript, detail: "Chi, Next.js, Express.js, Nest.js" }
+    - { label: Docker Swarm, detail: zero-downtime production deploys }
+    - { label: BCA Auto Debit, detail: secure banking integrations }
+    - { label: Self-hosted, detail: GitLab CI/CD on Ubuntu servers }
+    - { label: Payments, detail: "Midtrans, Durianpay, BCA" }
+
+experiences:
+  - slug: woori
+    company: PT Woori Finance Indonesia
+    org: Multi-finance (IDX BPFI)
+    role: Fullstack Developer
+    employment: Full-time · contract Sep 2024 – Sep 2025
+    location: Onsite, Indonesia
+    start: 2024-09
+    about: >
+      A publicly listed multi-finance company under Woori Financial Group,
+      providing car and heavy equipment financing across Indonesia.
+    achievements:
+      - "Architecting WIS (Woori Integrated System), the internal ERP: Go backend services and a Next.js frontend that turn financing workflows into integrated modules."
+      - "Designing and tuning Microsoft SQL Server schemas: indexing strategies, query optimization, and stored procedures."
+      - Orchestrating Docker Swarm deployments with multi-node clustering, replication, load balancing, and rolling updates for zero-downtime releases.
+      - Set up and administer a self-hosted GitLab instance on internal Ubuntu servers.
+      - "Built the BCA auto debit integration: request signing, encryption, scheduled batch debits, retries, and reconciliation reporting."
+      - Built the bilingual (ID/EN) company website in Next.js with credit simulation and application forms, plus an Express.js + PostgreSQL CMS for products, promotions, and OJK-compliant RIPLAY documents.
+      - Containerized services with Docker and maintain the Ubuntu production environment.
+    stack: [Go, Next.js, Express.js, SQL Server, PostgreSQL, Docker Swarm, GitLab CI/CD, Ubuntu, tRPC, Drizzle, shadcn/ui, Tailwind CSS]
+
+  - slug: waterhub
+    company: Waterhub
+    org: Startup
+    role: Backend Developer
+    employment: Freelance
+    location: Remote, Indonesia
+    start: 2024-05
+    achievements:
+      - Migrated servers from AWS to a Hostinger VPS with backup planning and minimal disruption.
+      - Build Go backend services and integrate Midtrans and Durianpay payment gateways.
+      - Automated test, build, and deploy pipelines with GitHub Actions and Docker.
+      - Develop CMS pages in Next.js optimized for performance, accessibility, and SEO.
+      - Design PostgreSQL schemas and handle backups, restores, and migrations.
+      - Monitor servers, analyze logs, and apply security patches to prevent downtime.
+    stack: [Go, PostgreSQL, AWS, Docker, GitHub Actions, Midtrans, Durianpay, IoT, WABlass]
+
+  - slug: turuntangan
+    company: TurunTangan
+    org: Volunteer organization
+    role: Fullstack Developer
+    employment: Freelance
+    location: Remote, Indonesia
+    start: 2023-09
+    end: 2024-07
+    achievements:
+      - "Kept frontend and backend running: monitoring, debugging, and performance work."
+      - Led new features such as the merchandise and magazine pages.
+      - Restructured the backend folder layout for readability and maintainability.
+      - Automated encrypted monthly database backups with tested recovery.
+    stack: [Express.js, PostgreSQL, Firestore, React]
+
+  - slug: kara-digital
+    company: Kara Digital
+    org: Software house
+    role: Backend Developer
+    employment: Full-time
+    location: Onsite, Indonesia
+    start: 2023-09
+    end: 2024-02
+    achievements:
+      - Worked with the mobile team to fix backend issues affecting the app.
+      - Implemented new website features on the backend.
+      - Designed new database models for performance and scalability.
+      - Built a scheduler for automated, trigger-based notifications.
+    stack: [Express.js, MongoDB, BigQuery, SQL, Cron]
+
+  - slug: treeclouds
+    company: Treeclouds
+    org: Software house
+    role: Web Developer
+    employment: Contract
+    location: Onsite, Indonesia
+    start: 2023-04
+    end: 2023-08
+    achievements:
+      - Debugged and fixed backend issues across client websites.
+      - Designed and built new services with stakeholders.
+      - Restructured database models for efficiency and scalability.
+    stack: [Express.js, MongoDB, BigQuery, SQL]
+
+  - slug: faotech
+    company: faoTech
+    org: Software house
+    role: Backend Developer
+    employment: Project based
+    location: Remote, Indonesia
+    start: 2022-09
+    end: 2023-04
+    achievements:
+      - Led backend development for four websites, from architecture to deployment.
+      - "Managed the servers hosting them: availability, performance, and security."
+      - Integrated third-party APIs, from payment gateways to social platforms.
+    stack: [Express.js, PostgreSQL]
+
+projects:
+  - slug: budi-bakti-prima
+    name: PT Budi Bakti Prima
+    kind: Company profile, project portfolio & CMS
+    location: Indonesia
+    start: 2026-03
+    end: 2026-05
+    about: >
+      A civil infrastructure contractor since 1975: ports, roads, bridges, and
+      runways across Indonesia.
+    highlights:
+      - Bilingual (ID/EN) corporate site in Next.js presenting a 50-year track record.
+      - Sanity CMS for hero carousels, projects, client logos, and services.
+      - Filterable project gallery (ports, roads, bridges, runways) with query-parameter navigation.
+      - Localized SEO metadata, OpenGraph, and WebP image delivery via Sanity's CDN.
+    stack: [Next.js, Sanity, SEO, Tailwind CSS]
+
+  - slug: fion
+    name: Fion
+    kind: Company profile with CMS
+    location: Indonesia
+    start: 2025-08
+    end: 2025-09
+    about: >
+      A remittance company providing cross-border payments for Indonesian
+      businesses: 40+ currencies, 200+ countries.
+    highlights:
+      - Bilingual Next.js site with locale-based routing across Solution, Pricing, Blog, and more.
+      - Sanity as a headless CMS for pages, blog posts, FAQs, and media.
+      - "SEO: dynamic metadata, OpenGraph and Twitter cards, canonical URLs."
+      - WhatsApp Business deep links and contact flows to improve lead conversion.
+    stack: [Next.js, Sanity, i18n, SEO]
+
+  - slug: hebronstar
+    name: Hebronstar
+    kind: B2B website & recruitment platform
+    location: South Korea
+    start: 2023-07
+    end: 2023-08
+    about: A management consulting firm and business strategy advisor based in South Korea.
+    highlights:
+      - Designed the PostgreSQL data model (ERD) and built the CRUD API.
+      - Authentication and authorization with Passport.js and JWT.
+      - Document storage on AWS S3 and email notifications via Brevo.
+    stack: [Express.js, PostgreSQL, Passport.js, JWT, AWS S3, Brevo]
+
+  - slug: kima
+    name: Kima
+    kind: SaaS career analytics
+    location: Russia
+    start: 2023-04
+    end: 2023-05
+    about: A platform for universities to track how well their programs match job market needs.
+    highlights:
+      - Designed the PostgreSQL data model and built the CRUD API.
+      - Authentication with Passport.js and JWT; documents on AWS S3.
+      - Integrated the hh.ru job platform API for job and candidate data.
+      - Email notifications with Nodemailer.
+    stack: [Express.js, PostgreSQL, Passport.js, AWS S3, hh.ru API, Nodemailer]
+
+skills:
+  - { group: Languages, skills: [Go, TypeScript, JavaScript, SQL] }
+  - { group: Backend, skills: [Express.js, Nest.js, Chi, Node.js, REST, tRPC, JWT, Passport.js, Swagger, Cron] }
+  - { group: Frontend, skills: [Next.js, React, Tailwind CSS, shadcn/ui, TanStack Query, Axios] }
+  - { group: Data, skills: [PostgreSQL, SQL Server, MongoDB, Firestore, BigQuery, Drizzle, Sequelize] }
+  - { group: DevOps, skills: [Docker, Docker Swarm, GitHub Actions, GitLab CI/CD, AWS, VPS, Ubuntu, Monitoring, Backups] }
+  - { group: Integrations, skills: [Midtrans, Durianpay, BCA Auto Debit, Sanity, WABlass, Nodemailer, Brevo, hh.ru API] }
+  - { group: Tools, skills: [Git, GitHub, GitLab, Neovim, Jira, Trello, Slack] }
+  - { group: Spoken, skills: [Indonesian (native), English (professional), Russian (junior)] }
+
+education:
+  - { school: Kazan State Power Engineering University, field: Russian Literature, location: "Kazan, Russia", year: 2020 }
+  - { school: Siwalima High School, field: Science, location: "Ambon, Indonesia", year: 2019 }
+
+contacts:
+  - { label: Email, value: ritza.kerz18@gmail.com }
+  - { label: LinkedIn, value: linkedin.com/in/rvldodo28 }
