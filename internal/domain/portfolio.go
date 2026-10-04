@@ -58,6 +58,7 @@ type Project struct {
 	Name       string
 	Kind       string // e.g. "Company profile with CMS"
 	Location   string
+	URL        string // optional live site, e.g. "example.com"
 	Period     Period
 	About      string
 	Highlights []string

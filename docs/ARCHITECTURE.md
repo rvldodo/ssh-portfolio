@@ -7,14 +7,14 @@ dependencies only point *inward*: toward the business core, never away from it.
             ┌──────────────────────────────────────────────────────────────┐
             │  cmd/ssh-portfolio  (composition root: wires it all)         │
             └──────────────────────────────────────────────────────────────┘
-               │               │               │                  │
-               ▼               ▼               ▼                  ▼
-   ┌─────────────────┐ ┌──────────────┐ ┌──────────────┐ ┌────────────────────┐
-   │delivery/        │ │ delivery/tui │ │ delivery/web │ │ repository/yamlrepo│  adapters
-   │sshserver (Wish) │ │ (Bubble Tea) │ │ (net/http)   │ │ (YAML → domain)    │  (outer layer)
-   └─────────────────┘ └──────────────┘ └──────────────┘ └────────────────────┘
-                              │ tui.Portfolio  │ web.Portfolio    │ implements
-                              ▼                ▼                  ▼ usecase.Repository
+               │               │                                  │
+               ▼               ▼                                  ▼
+   ┌─────────────────┐ ┌──────────────┐                  ┌────────────────────┐
+   │delivery/        │ │ delivery/tui │                  │ repository/yamlrepo│  adapters
+   │sshserver (Wish) │ │ (Bubble Tea) │                  │ (YAML → domain)    │  (outer layer)
+   └─────────────────┘ └──────────────┘                  └────────────────────┘
+                              │ tui.Portfolio                     │ implements
+                              ▼                                   ▼ usecase.Repository
                         ┌──────────────────────────────────────────────┐
                         │  usecase  (PortfolioService)                 │  application logic
                         └──────────────────────────────────────────────┘
@@ -86,25 +86,6 @@ Configures Wish: host key, open auth (it's a public site), idle timeout, and the
 middleware chain `logging → activeterm → bubbletea`. It takes a `ModelFactory`, so
 it has no idea it's serving a portfolio. It could serve any TUI.
 
-### `internal/delivery/web`: HTTP adapter (landing page)
-
-Serves the same domain over HTTP (Caddy adds HTTPS in front) so people who open
-`rivaldo.dev` in a browser learn how to connect. One URL, two answers, picked by
-the `Accept` header:
-
-| Client | Gets |
-|---|---|
-| Browser (`Accept: text/html`) | `templates/index.html`: hero with a copy-able `ssh` command, a clickable replica of the TUI, connect steps, the host key fingerprint, controls, FAQ |
-| `curl`, `wget`… | `terminal.go`: a Lip Gloss card with the command |
-
-Like the TUI, it depends on its own small `web.Portfolio` interface, which the
-same `PortfolioService` satisfies. That's why the browser preview and the SSH
-app can never disagree: they render the same use-case output.
-
-The page needs two values that aren't content: the command to show and the SSH
-fingerprint. `cmd` passes both in `web.Config`, taking the fingerprint from
-`sshserver.Server.Fingerprint()`. The adapters never talk to each other directly.
-
 ### `cmd/ssh-portfolio`: composition root
 
 The only place where concrete types meet:
@@ -115,9 +96,7 @@ svc, _ := usecase.NewPortfolioService(ctx, repo, time.Now)   // build the use ca
 srv, _ := sshserver.New(cfg, func(ssh.Session) tea.Model {   // pick a delivery adapter
     return tui.New(svc)
 })
-web := web.New(web.Config{SSHCommand: "ssh rivaldo.dev",       // second delivery adapter
-    Fingerprint: srv.Fingerprint()}, svc)                        // same use case
-// run both with errgroup: if one fails, both shut down
+return srv.Run(ctx)
 ```
 
 `-local` swaps the SSH adapter for a local Bubble Tea program. Nothing else changes,
@@ -127,9 +106,6 @@ which shows the layers really are independent.
 
 ```
 startup:  main → yamlrepo.Load → domain.Validate → PortfolioService (sorted, read-only)
-
-web:      browser ──HTTPS:443──▶ Caddy ──HTTP:8080──▶ web.handleIndex ──▶ index.html
-          curl    ──HTTPS:443──▶ Caddy ──HTTP:8080──▶ web.handleIndex ──▶ terminal card
 
 visit:    ssh client ──TCP:22──▶ Wish
              logging      log connect / disconnect
@@ -148,6 +124,6 @@ Content is loaded **once** and shared read-only. Each visitor gets their own
   A broken edit fails `make test` instead of breaking the live site.
 - **Each layer is testable on its own.** Domain rules, use-case logic, YAML parsing
   and UI navigation each have tests that need no network or SSH (`make test`).
-- **Easy to extend.** The web landing page was added as one new adapter, with no
-  changes to the domain or use cases. Content from Notion or a database would be
-  the same: add an adapter. See [DEVELOPMENT.md](DEVELOPMENT.md).
+- **Easy to extend.** Another way to view the portfolio (an HTTP page, an API) or
+  another content source (Notion, a database) is one new adapter, with no changes
+  to the domain or use cases. See [DEVELOPMENT.md](DEVELOPMENT.md).

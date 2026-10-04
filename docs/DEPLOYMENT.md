@@ -1,45 +1,38 @@
 # Deployment (VPS)
 
-## You need one domain
+## One subdomain, SSH only
 
-A single domain serves everything. The port decides which program answers:
+The website lives at `rvldodo.cloud` (hosted elsewhere). This project only serves
+SSH, on a subdomain pointed at the VPS:
 
-| Visitor does                | Port               | Answered by                                    |
-| --------------------------- | ------------------ | ---------------------------------------------- |
-| `ssh rivaldo.dev`           | 22                 | the portfolio TUI                              |
-| opens `https://rivaldo.dev` | 443 (80 redirects) | Caddy → landing page explaining how to connect |
-| `curl rivaldo.dev`          | 80/443             | Caddy → a terminal card with the command       |
-| you, managing the server    | 2222               | the VPS's OpenSSH (`ssh -p 2222 root@<ip>`)    |
-
-You do **not** need a second domain. `www.rivaldo.dev` is a free subdomain of the
-same domain and redirects to the bare domain automatically.
+| Visitor does                      | Port | Answered by                                  |
+| --------------------------------- | ---- | -------------------------------------------- |
+| `ssh portfolio.rvldodo.cloud`     | 22   | the portfolio TUI                            |
+| you, managing the server          | 2222 | the VPS's OpenSSH (`ssh -p 2222 root@<ip>`)  |
 
 ```
-                      rivaldo.dev  (A record → VPS IP)
-                               │
-          ┌────────────────────┼─────────────────────┐
-          │ :22                │ :80 / :443          │ :2222
-          ▼                    ▼                     ▼
-   portfolio container    caddy container       host OpenSSH
-   (SSH TUI)              (HTTPS, certificates)  (admin login)
-                               │
-                               └──▶ portfolio:8080 (landing page)
+          portfolio.rvldodo.cloud  (A record → VPS IP)
+                     │
+          ┌──────────┴──────────┐
+          │ :22                 │ :2222
+          ▼                     ▼
+   portfolio container     host OpenSSH
+   (SSH TUI)               (admin login)
 ```
 
 ## 1. DNS
 
-At your domain registrar (or Cloudflare), create:
+At your DNS provider (or Cloudflare), create:
 
-| Type | Name  | Value      |
-| ---- | ----- | ---------- |
-| A    | `@`   | `<vps-ip>` |
-| A    | `www` | `<vps-ip>` |
+| Type | Name        | Value      |
+| ---- | ----------- | ---------- |
+| A    | `portfolio` | `<vps-ip>` |
 
-> ⚠️ **Cloudflare users:** set both records to **DNS only (grey cloud)**. Cloudflare's
-> orange-cloud proxy only carries web traffic, so `ssh rivaldo.dev` would stop working.
-> Caddy provides HTTPS itself, so you don't lose anything.
+> ⚠️ **Cloudflare users:** set the record to **DNS only (grey cloud)**. Cloudflare's
+> orange-cloud proxy only carries web traffic, so `ssh portfolio.rvldodo.cloud` would
+> stop working.
 
-Check it: `dig +short rivaldo.dev` should print your VPS IP.
+Check it: `dig +short portfolio.rvldodo.cloud` should print your VPS IP.
 
 ## 2. Move the admin SSH login to port 2222
 
@@ -50,13 +43,13 @@ The portfolio must own port 22, so the VPS's own login moves.
 
 ```sh
 sudo sed -i 's/^#\?Port .*/Port 2222/' /etc/ssh/sshd_config
-sudo ufw allow 2222/tcp && sudo ufw allow 22/tcp && sudo ufw allow 80/tcp && sudo ufw allow 443   # if ufw is on
+sudo ufw allow 2222/tcp && sudo ufw allow 22/tcp   # if ufw is on
 sudo systemctl daemon-reload
 sudo systemctl restart ssh.socket 2>/dev/null || sudo systemctl restart ssh
 ```
 
 If Hostinger's panel firewall is enabled (hPanel → VPS → Firewall), allow TCP
-**22, 80, 443, 2222** and UDP **443** there too.
+**22** and **2222** there too.
 
 **Verify from your Mac, in a new terminal:** `ssh -p 2222 root@<vps-ip>`. Continue only
 once this works, and update any CI or deploy scripts that SSH into the server.
@@ -80,24 +73,15 @@ On the VPS:
 
 ```sh
 cd /opt/ssh-portfolio
-echo "DOMAIN=rivaldo.dev" > .env
 docker compose up -d --build
 ```
-
-Caddy gets an HTTPS certificate on its first request. That needs DNS (step 1) to
-already point at the server and ports 80/443 to be open.
 
 ## 5. Verify
 
 ```sh
-ssh rivaldo.dev                 # the portfolio
-curl rivaldo.dev                # terminal card
-open https://rivaldo.dev        # landing page with fingerprint
+ssh portfolio.rvldodo.cloud     # the portfolio
 docker compose logs -f          # on the VPS
 ```
-
-The landing page shows the server's **real host key fingerprint**. Check that it
-matches what `ssh` prints on first connect.
 
 ## Updating
 
@@ -108,8 +92,7 @@ rsync -av --exclude .ssh --exclude bin -e "ssh -p 2222" ~/projects/ssh-portfolio
 ssh -p 2222 root@<vps-ip> 'cd /opt/ssh-portfolio && docker compose up -d --build'
 ```
 
-The host key (`portfolio-data` volume) and certificates (`caddy-data`) survive
-rebuilds. **Back up the host key** if you ever move servers, or every returning
+The host key (`portfolio-data` volume) survives rebuilds. **Back up the host key** if you ever move servers, or every returning
 visitor sees a "host identification has changed" warning:
 
 ```sh
@@ -120,12 +103,10 @@ docker compose exec portfolio cat /data/host_ed25519 > host_ed25519.backup
 
 | Symptom                                                        | Likely cause                                                                              |
 | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `ssh rivaldo.dev` asks for a password or reaches the VPS shell | OpenSSH is still on 22 (step 2), or the container isn't running                           |
-| `ssh` hangs, but HTTPS works                                   | Cloudflare proxy is on (use grey cloud), or port 22 is closed in the firewall             |
-| Browser shows a certificate error                              | DNS isn't pointing at the VPS yet, or 80/443 are blocked. See `docker compose logs caddy` |
-| `curl` shows HTML                                              | `curl` was given `-H "Accept: text/html"`; plain `curl` gets the card                     |
+| `ssh portfolio.rvldodo.cloud` asks for a password or reaches the VPS shell | OpenSSH is still on 22 (step 2), or the container isn't running |
+| `ssh` hangs                                                    | Cloudflare proxy is on (use grey cloud), or port 22 is closed in the firewall |
 
 ## Alternative: Fly.io
 
-`fly.toml` is included and covers the SSH side. For the web page on Fly, add an
-`[http_service]` with `internal_port = 8080`, and Fly handles HTTPS instead of Caddy.
+`fly.toml` is included: `fly launch --no-deploy`, create the `data` volume,
+`fly deploy`, then `fly ips allocate-v4` and point the `portfolio` A record at it.

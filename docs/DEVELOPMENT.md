@@ -2,7 +2,7 @@
 
 ```sh
 make local    # fastest loop: UI in this terminal
-make run      # real SSH (ssh -p 23234 localhost) + landing page (http://localhost:8080)
+make run      # real SSH (ssh -p 23234 localhost)
 make test     # go vet + tests for every layer
 ```
 
@@ -14,7 +14,6 @@ make test     # go vet + tests for every layer
 | `usecase` | sorting, years of experience, copies, error paths | `fakeRepo` + frozen `Clock` |
 | `repository/yamlrepo` | embedded content is valid, date parsing, typo detection | YAML strings |
 | `delivery/tui` | navigation, detail view, tab wrap-around, fits width | `fakePortfolio`, sending key messages to `Update` |
-| `delivery/web` | browser gets HTML (command, fingerprint, escaping), curl gets the card, 404s, contact links | `httptest` + `fakePortfolio` |
 
 UI tests drive the model directly, without a real terminal:
 
@@ -26,12 +25,12 @@ strings.Contains(m.View().Content, "...")
 
 ## Recipes
 
-### Add a field (e.g. a project URL)
+### Add a field (e.g. a project's client name)
 
-Work from the inside out:
+Work from the inside out (this is how `Project.URL` was added):
 
-1. `domain/portfolio.go`: add `URL string` to `Project`.
-2. `repository/yamlrepo`: add `URL string \`yaml:"url"\`` to `projectDTO` and map it in `toDomain`.
+1. `domain/portfolio.go`: add `Client string` to `Project`.
+2. `repository/yamlrepo`: add `Client string \`yaml:"client"\`` to `projectDTO` and map it in `toDomain`.
 3. `delivery/tui/pages.go`: render it in `projectDetail`.
 4. `content/portfolio.yaml`: fill it in. Document it in `docs/CONTENT.md`.
 
@@ -57,8 +56,9 @@ Then swap it in `cmd/ssh-portfolio/main.go`. The use case, domain and UI don't c
 
 ### Add another way to view it (e.g. an HTTP page)
 
-Create `internal/delivery/web` that takes the same `PortfolioService` and renders
-HTML. Start it from `main.go` alongside the SSH server.
+Create a new package under `internal/delivery/` that takes the same
+`PortfolioService` and renders it. Start it from `main.go` alongside the SSH
+server (e.g. with `errgroup`, so if one fails both shut down).
 
 ## Gotchas learned the hard way
 

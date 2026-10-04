@@ -103,7 +103,11 @@ func projectDetail(p domain.Project, w int) string {
 	var b strings.Builder
 	b.WriteString(h1Style.Render(p.Name) + "\n")
 	b.WriteString(accentStyle.Render(p.Kind) + "\n")
-	b.WriteString(dimStyle.Render(p.Period.String()+" · "+p.Location) + "\n\n")
+	b.WriteString(dimStyle.Render(p.Period.String()+" · "+p.Location) + "\n")
+	if p.URL != "" {
+		b.WriteString(accentStyle.Render(p.URL) + "\n")
+	}
+	b.WriteString("\n")
 	if p.About != "" {
 		b.WriteString(para(p.About, w) + "\n\n")
 	}

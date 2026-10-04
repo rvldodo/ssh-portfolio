@@ -1,10 +1,8 @@
-# Production stack: one domain, two protocols.
+# Production stack: the portfolio TUI over SSH on port 22.
 #
-#   ssh  <domain>    ->  :22       ->  portfolio (TUI over SSH)
-#   https://<domain> ->  :80/:443  ->  caddy -> portfolio:8080 (landing page)
+#   ssh <domain>  ->  :22  ->  portfolio
 #
-# Usage on the VPS:  DOMAIN=rivaldo.dev docker compose up -d --build
-# (or put DOMAIN=rivaldo.dev in a .env file next to this one)
+# Usage on the VPS:  docker compose up -d --build
 
 services:
   portfolio:
@@ -14,25 +12,6 @@ services:
       - "22:22"                  # public SSH goes straight to the app
     volumes:
       - portfolio-data:/data     # host key: keep it stable forever
-    expose:
-      - "8080"                   # web, reachable only by caddy
-
-  caddy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    depends_on: [portfolio]
-    environment:
-      DOMAIN: ${DOMAIN:?set DOMAIN, e.g. DOMAIN=rivaldo.dev}
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"            # HTTP/3
-    volumes:
-      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy-data:/data         # TLS certificates
-      - caddy-config:/config
 
 volumes:
   portfolio-data:
-  caddy-data:
-  caddy-config:
