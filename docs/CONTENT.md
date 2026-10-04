@@ -17,7 +17,7 @@ duplicate slug.
 
 | Field | Example | Notes |
 |---|---|---|
-| `address` | `rivaldo.dev` | Required. Shown in the address bar and as the `ssh …` contact. |
+| `address` | `portfolio.rvldodo.cloud` | Required. Shown in the address bar and as the `ssh …` contact. |
 
 ### `profile`
 
@@ -47,7 +47,8 @@ duplicate slug.
 ### `projects` (list, shown newest first)
 
 Same as experiences, but uses `name` and `kind` instead of company, role and
-employment, and `highlights` instead of `achievements`.
+employment, and `highlights` instead of `achievements`. An optional `url`
+(e.g. `gerakanturuntangan.com`) is shown under the dates.
 
 ### `skills`
 

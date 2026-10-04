@@ -1,6 +1,6 @@
 .PHONY: run local test build docker
 
-run:    ## SSH on :23234 + web on http://localhost:8080
+run:    ## SSH on :23234
 	go run ./cmd/ssh-portfolio
 
 local:  ## TUI in this terminal, no SSH

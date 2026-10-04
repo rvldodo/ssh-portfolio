@@ -10,5 +10,5 @@ COPY --from=build /ssh-portfolio /usr/local/bin/ssh-portfolio
 RUN mkdir -p /data
 # The host key lives on a volume so it survives deploys (otherwise every
 # visitor gets a scary "REMOTE HOST IDENTIFICATION HAS CHANGED" warning).
-EXPOSE 22 8080
-ENTRYPOINT ["ssh-portfolio", "-port", "22", "-key", "/data/host_ed25519", "-http", ":8080"]
+EXPOSE 22
+ENTRYPOINT ["ssh-portfolio", "-port", "22", "-key", "/data/host_ed25519"]

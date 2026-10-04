@@ -104,6 +104,7 @@ type projectDTO struct {
 	Name       string   `yaml:"name"`
 	Kind       string   `yaml:"kind"`
 	Location   string   `yaml:"location"`
+	URL        string   `yaml:"url"`
 	Start      string   `yaml:"start"`
 	End        string   `yaml:"end"`
 	About      string   `yaml:"about"`
@@ -147,7 +148,7 @@ func (d document) toDomain() (domain.Portfolio, error) {
 			return domain.Portfolio{}, fmt.Errorf("project %q: %w", pr.Slug, err)
 		}
 		p.Projects = append(p.Projects, domain.Project{
-			Slug: pr.Slug, Name: pr.Name, Kind: pr.Kind, Location: pr.Location, Period: period,
+			Slug: pr.Slug, Name: pr.Name, Kind: pr.Kind, Location: pr.Location, URL: pr.URL, Period: period,
 			About: strings.TrimSpace(pr.About), Highlights: pr.Highlights, Stack: pr.Stack,
 		})
 	}

@@ -11,18 +11,20 @@ profile:
   title: Fullstack Developer
   location: Indonesia
   summary: >
-    Fullstack developer building ERP systems, payment integrations, and web
-    platforms for fintech and multi-finance companies. I own systems
-    end-to-end: from database design and secure banking integrations to CI/CD
-    pipelines and production servers on Linux.
+    I build reliable software for the web: backend services in Go, frontends
+    in Next.js, and the infrastructure that keeps them running. 4+ years in
+    fintech and startups, owning systems end-to-end, from database design to
+    zero-downtime deployment. I care about the parts that often get skipped:
+    secure banking integrations, releases without downtime, and backups that
+    actually restore.
   now: >
     Fullstack Developer at PT Woori Finance Indonesia, building WIS, the
     company's internal ERP.
   highlights:
-    - { label: Go · TypeScript, detail: "Chi, Next.js, Express.js, Nest.js" }
-    - { label: Docker Swarm, detail: zero-downtime production deploys }
-    - { label: BCA Auto Debit, detail: secure banking integrations }
-    - { label: Self-hosted, detail: GitLab CI/CD on Ubuntu servers }
+    - { label: Backend with Go, detail: "Go, Chi, Express.js, Nest.js, REST, tRPC" }
+    - { label: Fullstack, detail: "Next.js, React, Sanity, Tailwind CSS" }
+    - { label: Infra & DevOps, detail: "Docker Swarm, GitLab CI/CD, GitHub Actions, Ubuntu" }
+    - { label: Banking, detail: secure BCA auto debit integration }
     - { label: Payments, detail: "Midtrans, Durianpay, BCA" }
 
 experiences:
@@ -146,6 +148,52 @@ experiences:
     stack: [Express.js, PostgreSQL]
 
 projects:
+  - slug: woori-website
+    name: Woori Finance Indonesia
+    kind: Corporate website & custom CMS
+    location: Indonesia
+    start: 2024-09
+    about: >
+      The public website of PT Woori Finance Indonesia, a multi-finance
+      company providing car and heavy equipment financing.
+    highlights:
+      - Bilingual (ID/EN) Next.js site with credit simulation and application forms.
+      - Custom Express.js + PostgreSQL CMS for products, promotions, and OJK-compliant RIPLAY documents.
+      - Containerized and deployed on the company's Ubuntu servers.
+    stack: [Next.js, Express.js, PostgreSQL, Docker, Tailwind CSS]
+
+  - slug: waterhub
+    name: WaterHub
+    kind: Backend system, payments & CMS website
+    location: Indonesia
+    start: 2024-05
+    about: >
+      Backend, payment flows, and a CMS-driven website for Waterhub, a water
+      technology startup.
+    highlights:
+      - Go backend services with Midtrans and Durianpay payment gateways.
+      - Next.js CMS pages optimized for performance, accessibility, and SEO.
+      - Migrated servers from AWS to a VPS with backup planning and minimal disruption.
+      - GitHub Actions + Docker pipelines for test, build, and deploy.
+    stack: [Go, Next.js, PostgreSQL, Midtrans, Durianpay, Docker, GitHub Actions]
+
+  - slug: turuntangan
+    name: TurunTangan
+    kind: Volunteer movement platform
+    location: Indonesia
+    url: gerakanturuntangan.com
+    start: 2023-09
+    end: 2024-07
+    about: >
+      A national youth volunteer movement with 100+ regional chapters across
+      Indonesia.
+    highlights:
+      - Built the merchandise and magazine features.
+      - Restructured the backend for easier maintenance.
+      - API integrations, debugging, and performance optimization.
+      - Automated monthly database backups with tested recovery.
+    stack: [React, Express.js, PostgreSQL, Firestore]
+
   - slug: budi-bakti-prima
     name: PT Budi Bakti Prima
     kind: Company profile, project portfolio & CMS
@@ -291,4 +339,8 @@ education:
 
 contacts:
   - { label: Email, value: ritza.kerz18@gmail.com }
+  - { label: Website, value: rvldodo.cloud }
+  - { label: GitHub, value: github.com/rvldodo }
   - { label: LinkedIn, value: linkedin.com/in/rvldodo28 }
+  - { label: Instagram, value: instagram.com/rvldodo_ }
+  - { label: Facebook, value: facebook.com/rival.law28 }
