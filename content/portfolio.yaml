@@ -4,7 +4,7 @@
 # Experiences and projects are shown newest first automatically.
 
 site:
-  address: rvldodo.cloud # shown in the address bar and as `ssh rivaldo.dev`
+  address: portfolio.rvldodo.cloud # shown in the address bar and as `ssh portfolio.rvldodo.cloud`
 
 profile:
   name: Rivaldo Ardika Lawalata
