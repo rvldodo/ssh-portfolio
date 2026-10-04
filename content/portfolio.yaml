@@ -4,7 +4,7 @@
 # Experiences and projects are shown newest first automatically.
 
 site:
-  address: rivaldo.dev # shown in the address bar and as `ssh rivaldo.dev`
+  address: rvldodo.cloud # shown in the address bar and as `ssh rivaldo.dev`
 
 profile:
   name: Rivaldo Ardika Lawalata
@@ -44,7 +44,21 @@ experiences:
       - "Built the BCA auto debit integration: request signing, encryption, scheduled batch debits, retries, and reconciliation reporting."
       - Built the bilingual (ID/EN) company website in Next.js with credit simulation and application forms, plus an Express.js + PostgreSQL CMS for products, promotions, and OJK-compliant RIPLAY documents.
       - Containerized services with Docker and maintain the Ubuntu production environment.
-    stack: [Go, Next.js, Express.js, SQL Server, PostgreSQL, Docker Swarm, GitLab CI/CD, Ubuntu, tRPC, Drizzle, shadcn/ui, Tailwind CSS]
+    stack:
+      [
+        Go,
+        Next.js,
+        Express.js,
+        SQL Server,
+        PostgreSQL,
+        Docker Swarm,
+        GitLab CI/CD,
+        Ubuntu,
+        tRPC,
+        Drizzle,
+        shadcn/ui,
+        Tailwind CSS,
+      ]
 
   - slug: waterhub
     company: Waterhub
@@ -60,7 +74,18 @@ experiences:
       - Develop CMS pages in Next.js optimized for performance, accessibility, and SEO.
       - Design PostgreSQL schemas and handle backups, restores, and migrations.
       - Monitor servers, analyze logs, and apply security patches to prevent downtime.
-    stack: [Go, PostgreSQL, AWS, Docker, GitHub Actions, Midtrans, Durianpay, IoT, WABlass]
+    stack:
+      [
+        Go,
+        PostgreSQL,
+        AWS,
+        Docker,
+        GitHub Actions,
+        Midtrans,
+        Durianpay,
+        IoT,
+        WABlass,
+      ]
 
   - slug: turuntangan
     company: TurunTangan
@@ -182,17 +207,87 @@ projects:
 
 skills:
   - { group: Languages, skills: [Go, TypeScript, JavaScript, SQL] }
-  - { group: Backend, skills: [Express.js, Nest.js, Chi, Node.js, REST, tRPC, JWT, Passport.js, Swagger, Cron] }
-  - { group: Frontend, skills: [Next.js, React, Tailwind CSS, shadcn/ui, TanStack Query, Axios] }
-  - { group: Data, skills: [PostgreSQL, SQL Server, MongoDB, Firestore, BigQuery, Drizzle, Sequelize] }
-  - { group: DevOps, skills: [Docker, Docker Swarm, GitHub Actions, GitLab CI/CD, AWS, VPS, Ubuntu, Monitoring, Backups] }
-  - { group: Integrations, skills: [Midtrans, Durianpay, BCA Auto Debit, Sanity, WABlass, Nodemailer, Brevo, hh.ru API] }
+  - {
+      group: Backend,
+      skills:
+        [
+          Express.js,
+          Nest.js,
+          Chi,
+          Node.js,
+          REST,
+          tRPC,
+          JWT,
+          Passport.js,
+          Swagger,
+          Cron,
+        ],
+    }
+  - {
+      group: Frontend,
+      skills: [Next.js, React, Tailwind CSS, shadcn/ui, TanStack Query, Axios],
+    }
+  - {
+      group: Data,
+      skills:
+        [
+          PostgreSQL,
+          SQL Server,
+          MongoDB,
+          Firestore,
+          BigQuery,
+          Drizzle,
+          Sequelize,
+        ],
+    }
+  - {
+      group: DevOps,
+      skills:
+        [
+          Docker,
+          Docker Swarm,
+          GitHub Actions,
+          GitLab CI/CD,
+          AWS,
+          VPS,
+          Ubuntu,
+          Monitoring,
+          Backups,
+        ],
+    }
+  - {
+      group: Integrations,
+      skills:
+        [
+          Midtrans,
+          Durianpay,
+          BCA Auto Debit,
+          Sanity,
+          WABlass,
+          Nodemailer,
+          Brevo,
+          hh.ru API,
+        ],
+    }
   - { group: Tools, skills: [Git, GitHub, GitLab, Neovim, Jira, Trello, Slack] }
-  - { group: Spoken, skills: [Indonesian (native), English (professional), Russian (junior)] }
+  - {
+      group: Spoken,
+      skills: [Indonesian (native), English (professional), Russian (junior)],
+    }
 
 education:
-  - { school: Kazan State Power Engineering University, field: Russian Literature, location: "Kazan, Russia", year: 2020 }
-  - { school: Siwalima High School, field: Science, location: "Ambon, Indonesia", year: 2019 }
+  - {
+      school: Kazan State Power Engineering University,
+      field: Russian Literature,
+      location: "Kazan, Russia",
+      year: 2020,
+    }
+  - {
+      school: Siwalima High School,
+      field: Science,
+      location: "Ambon, Indonesia",
+      year: 2019,
+    }
 
 contacts:
   - { label: Email, value: ritza.kerz18@gmail.com }
